@@ -19,6 +19,43 @@ If `.agents/em-context.md` does not exist, ask for a minimal manager profile fir
 If a specific person is central to the conversation and `.agents/reports/[name].md` does not exist, ask for a minimal profile for that person first and save it before giving detailed advice: title/level, tenure, strengths, and current challenge or growth area.
 
 If the conversation reveals durable new context later, update `.agents/em-context.md` or `.agents/reports/[name].md` automatically. Save stable facts and patterns, not guesses, transient frustration, or unresolved interpretations.
+
+---
+
+## Meeting Preparation With Obsidian
+
+For 1:1 meeting preparation, use the Obsidian vault at:
+
+`$HOME/Documents/obsidian`
+
+Use the `obsidian-cli` skill when interacting with the vault through the Obsidian CLI. Use the `obsidian-markdown` skill when creating or editing Obsidian-flavored Markdown.
+
+Derive the person ID from the person’s name as lowercase first initial + surname. For example, `Sam Younger` becomes `syounger`.
+
+For the person being prepared for, use this directory:
+
+`$HOME/Documents/obsidian/people/[person-id]/`
+
+Before creating the new meeting note, read recent existing notes in that directory, especially prior 1:1 notes matching:
+
+`*- [person-id]-1-1.md`
+`*--[person-id]-1-1.md`
+
+Create a new meeting note in the person directory with this filename:
+
+`YYYY-MM-DD--[person-id]-1-1.md`
+
+Apply the Obsidian template named `1-1--template`.
+
+Ensure the note has frontmatter like:
+
+```yaml
+---
+person: [person-id]
+tags:
+  - [person-id]
+```
+
 ---
 
 ## Response Style
