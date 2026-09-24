@@ -15,6 +15,21 @@ Confirm the Jira epic key and read the current epic before editing it. Read the 
 
 When the request includes a Jira update, use Atlassian MCP tools first. Use Atlassian Document Format (ADF) for the epic description and Acceptance Criteria field. For RAD issues, Acceptance Criteria is `customfield_10209`; never substitute a description or checklist for it.
 
+### Jira dates in ADF descriptions
+
+When adding a real calendar date anywhere in a Jira description, use Atlassian's native ADF `date` inline node rather than a text date. This includes `Last reviewed`, a known `Target date`, and dates added to any other description section. Keep non-dates such as `TBD` as text.
+
+For a date-only value, calculate the Unix epoch in milliseconds at the start of that date in UTC and store it as a string. For example, 24 September 2026 is:
+
+```json
+{
+  "type": "date",
+  "attrs": { "timestamp": "1790208000000" }
+}
+```
+
+In a `Last reviewed` paragraph, place this node immediately after the bold label; do not embed the date in a text node. This preserves Jira's native, locale-aware date rendering.
+
 For projects that affect several teams, a broader portfolio, platform capabilities, or AI-enabled delivery, read [references/sources.md](references/sources.md). It provides current planning lenses and primary sources for the senior engineering manager scope; do not load it for a routine single-team epic.
 
 ## Outcome
