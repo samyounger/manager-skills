@@ -2,7 +2,7 @@
 name: 1on1s
 description: Prepares agendas, diagnoses struggling 1:1 relationships, and gives frameworks for running effective 1:1 meetings with direct reports. Use when the user wants to prepare for, run, improve, or follow up on a 1:1, or says "1:1 agenda," "prepare for my 1:1," "1:1 notes," "what should I talk about with," "my direct report," "check in with my report," "make my 1:1s better," "1:1 template," or "my 1:1s feel like status updates." Do NOT use when the user needs to deliver specific feedback (use feedback) or discuss performance reviews (use performance-reviews).
 metadata:
-  version: 2.1.2
+  version: 2.5.0
 ---
 
 # 1:1s
@@ -22,19 +22,21 @@ If the conversation reveals durable new context later, update `.agents/em-contex
 
 ---
 
-## Meeting Preparation With Obsidian
+## Meeting Preparation
 
 For 1:1 meeting preparation, use the Obsidian vault at:
 
-`$HOME/Documents/obsidian`
+`$HOME/Documents/obsidian/work_usertesting`
 
-Use the `obsidian-cli` skill when interacting with the vault through the Obsidian CLI. Use the `obsidian-markdown` skill when creating or editing Obsidian-flavored Markdown.
+Use the skills `* (obsidian)` when interacting with the vault through the Obsidian CLI. Use the `obsidian-markdown` skill when creating or editing Obsidian-flavored Markdown. Require that the user has Obsidian open and that the CLI responds before reading or changing the vault. In Codex's shell sandbox, use escalated terminal access for the CLI so it connects to the open app. If either is unavailable, stop and report the blocker rather than using direct filesystem workarounds.
 
 Derive the person ID from the person’s name as lowercase first initial + surname. For example, `Sam Younger` becomes `syounger`.
 
+Read the person’s direct-report profile before gathering delivery data. Its `Delivery System IDs` section is the source of truth for the exact Jira account ID and GitHub username. Use those IDs in Jira and GitHub queries rather than matching display names. If a value is absent or explicitly unconfirmed, do not guess: use a name-based search to identify it, confirm it against an authoritative record, and then update the profile.
+
 For the person being prepared for, use this directory:
 
-`$HOME/Documents/obsidian/people/[person-id]/`
+`$HOME/Documents/obsidian/work_usertesting/people/[person-id]/`
 
 Before creating the new meeting note, read recent existing notes in that directory, especially prior 1:1 notes matching:
 
@@ -54,7 +56,85 @@ Ensure the note has frontmatter like:
 person: [person-id]
 tags:
   - [person-id]
+reporting_period_start: YYYY-MM-DD
+reporting_period_end: YYYY-MM-DD
+delivery_counts:
+  user_story: null
+  sub_task: null
+  task: null
+  bug: null
+  support_issue: null
+---
 ```
+
+After gathering delivery data, populate the reporting-period and `delivery_counts` properties. These frontmatter fields are the canonical machine-readable record for the note; a missing or `null` value is not zero. Keep qualitative evaluation, evidence, context, quality, communication, and charts in the note body. Do not maintain a separate body copy of the counts unless it is needed for the conversation.
+
+Fetch data from the prior two weeks that covers:
+- Jira tickets completed attributed to that user, using their Jira account ID.
+- GitHub pull requests completed, using their GitHub username.
+- GitHub pull requests that have not closed and look stuck / blocked, using their GitHub username.
+
+Then compile a report showing this activity and the output evaluation below.
+
+### Output Evaluation
+
+Use the two-week activity as evidence for a coaching conversation, not a performance rating. Evaluate patterns rather than raw ticket or pull-request counts, and account for scope, complexity, dependencies, leave, and work that is not visible in Jira or GitHub.
+
+Add a short, evidence-based evaluation to the preparation report using this template:
+
+```markdown
+## Output evaluation
+
+### Outcome and impact
+- **What moved:** [delivered result, customer/team impact, or meaningful progress]
+- **Evidence:** [tickets, PRs, metrics, stakeholder feedback]
+- **Context:** [scope, complexity, dependencies, or constraints]
+
+### Quality
+- **What was strong:** [correctness, reliability, maintainability, testing, review readiness, or operational care]
+- **Opportunity:** [one specific improvement, if supported by evidence]
+
+### Communication and collaboration
+- **What was strong:** [clarity, timely updates, early escalation of risk, review participation, or stakeholder alignment]
+- **Opportunity:** [one specific improvement, if supported by evidence]
+
+### Conversation prompt
+[A neutral question that invites their perspective before drawing conclusions.]
+```
+
+Keep each section to one or two evidence-backed bullets. Do not infer quality or communication from activity volume, merge status, or a lack of visible updates. Describe observed behaviour and its effect, distinguish facts from interpretation, and state uncertainty where evidence is thin.
+
+Useful prompts include:
+- “Which part of this work are you most confident in, and what would you change next time?”
+- “Where did the work become harder or slower than expected?”
+- “Who needed context from you, and did they get it early enough?”
+- “What would make it easier to raise risk or ask for help sooner?”
+
+### Six-Month Delivery Trend
+
+Read the person’s prior 1:1 notes from the preceding six months. Extract each measurement from the `reporting_period_start`, `reporting_period_end`, and `delivery_counts` frontmatter properties. For older notes that predate these properties, use a body measurement only when it explicitly records both the reporting period and ticket-delivery counts. Do not treat absent data as zero, recreate historical counts from memory, or sum overlapping reporting periods.
+
+Add a `## Delivery trend (last six months)` section to the new note when at least three comparable reporting periods exist. Start with an auditable table, then add an inline Mermaid bar chart of the total completed tickets for each reporting period. A total is the sum of the listed issue-type counts, including sub-tasks. Label each bar with the end date of its reporting period, and call it **reported ticket delivery** rather than output or performance.
+
+````markdown
+## Delivery trend (last six months)
+
+| Reporting period | User Story | Sub-task | Task | Bug | Support Issue | Total |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 2026-04-01 to 2026-04-14 | 2 | 3 | 1 | 0 | 0 | 6 |
+
+```mermaid
+xychart-beta
+    title "Reported ticket delivery by 1:1 period"
+    x-axis ["14 Apr", "12 May", "09 Jun", "14 Jul", "11 Aug", "08 Sep"]
+    y-axis "Completed tickets" 0 --> 12
+    bar [6, 8, 5, 9, 7, 10]
+```
+````
+
+If fewer than three comparable periods are available, say that the historical baseline is still being built and omit the chart. Keep the current issue-type breakdown even when no chart can be produced.
+
+Preview the generated Mermaid block in Obsidian Reading view. `xychart-beta` support depends on the Mermaid version bundled with Obsidian; if it does not render, retain the table and add a brief note that the chart is unavailable in the current Obsidian version.
 
 ---
 

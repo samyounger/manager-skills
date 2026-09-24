@@ -2,7 +2,7 @@
 name: em-context
 description: Foundation skill for engineering managers. Use when setting up context about your team, org structure, management philosophy, and current priorities. All other EM skills read this first. Also use when creating or updating a direct report profile. Trigger phrases: "set my team context," "update my EM context," "here's my team setup," "my team is," "my org is," "add a report," "update report profile," "create a profile for."
 metadata:
-  version: 1.3.0
+  version: 1.3.1
 ---
 
 # EM Context
@@ -148,6 +148,10 @@ Create one file per person at `.agents/reports/[firstname].md`:
 - Level: (e.g., L4, Senior, Staff)
 - Tenure on team:
 - Background / how they joined:
+
+## Delivery System IDs
+- Jira account ID:
+- GitHub username:
 
 ## Strengths
 - [What they're genuinely good at — specific, not generic]
