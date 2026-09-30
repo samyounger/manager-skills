@@ -76,6 +76,14 @@ Fetch data from the prior two weeks that covers:
 
 Then compile a report showing this activity and the output evaluation below.
 
+### Linking Jira and GitHub Evidence
+
+In the generated meeting note, every Jira issue key and GitHub pull-request reference must be a clickable Markdown link. Never leave a ticket key or PR number as plain text.
+
+- Jira: link the issue key to its canonical Jira URL: `[RAD-85120](https://user-testing.atlassian.net/browse/RAD-85120)`.
+- GitHub: link the PR number to the canonical URL returned by the data source (for example, its `html_url`): `[#1321](https://github.com/UserTestingEnterprise/test-automation/pull/1321)`.
+- Apply this rule everywhere in the note, including the activity summary, evidence, output evaluation, agenda prompts, and action items. Do not construct a GitHub repository URL unless it has been verified by the source.
+
 ### Output Evaluation
 
 Use the two-week activity as evidence for a coaching conversation, not a performance rating. Evaluate patterns rather than raw ticket or pull-request counts, and account for scope, complexity, dependencies, leave, and work that is not visible in Jira or GitHub.
