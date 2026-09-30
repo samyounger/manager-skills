@@ -6,13 +6,13 @@ Read the Engineering Manager role scope and Team operation for every report when
 
 Use this source before deciding that an item requires Engineering Manager attention. It frames the role as owning the delivery system—portfolio coherence, capacity, standards, escalation, and meaningful exceptions—rather than personally coordinating every project or overriding accountable role owners. Put an item in Needs EM Attention only when it needs this system-level intervention; leave routine delivery execution, product decisions, technical design, quality evidence, release work, and incident response with their named owners.
 
-- [Engineering Manager role scope](/Users/syounger/Documents/obsidian/work_usertesting/team-management/roles/engineering-manager.md)
+- Engineering Manager role scope: `<Obsidian vault>/team-management/roles/engineering-manager.md`, resolving `Obsidian vault` from `.agents/em-context.md`.
 
 ## Team operation and role inputs
 
 Use the Team operation role map to identify the accountable role that should supply a missing decision, artefact, evidence, or hand-off. Keep this separate from the Engineering Manager's intervention: a Project Lead retains the technical delivery path and day-to-day coordination; Product owns outcome, priority, scope, and acceptance; Design owns experience intent; QE owns risk-based quality strategy; Architecture and Security provide consultation for their triggers; and On-call owns immediate operational response. When the role map does not resolve the input owner, read its linked role-specific scope before writing `Input needed from`. Do not list roles that are merely informed or consulted.
 
-- [Team operation](/Users/syounger/Documents/obsidian/work_usertesting/team-management/roles/team-operation.md)
+- Team operation: `<Obsidian vault>/team-management/roles/team-operation.md`, resolving `Obsidian vault` from `.agents/em-context.md`.
 
 ## Report outcomes and forecast variance
 

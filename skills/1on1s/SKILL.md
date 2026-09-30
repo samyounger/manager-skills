@@ -24,9 +24,7 @@ If the conversation reveals durable new context later, update `.agents/em-contex
 
 ## Meeting Preparation
 
-For 1:1 meeting preparation, use the Obsidian vault at:
-
-`$HOME/Documents/obsidian/work_usertesting`
+For 1:1 meeting preparation, read the `Obsidian vault` path from `.agents/em-context.md`; it is the source of truth for the vault location. If it is absent, ask the user for the vault path before using Obsidian.
 
 Use the skills `* (obsidian)` when interacting with the vault through the Obsidian CLI. Use the `obsidian-markdown` skill when creating or editing Obsidian-flavored Markdown. Require that the user has Obsidian open and that the CLI responds before reading or changing the vault. In Codex's shell sandbox, use escalated terminal access for the CLI so it connects to the open app. If either is unavailable, stop and report the blocker rather than using direct filesystem workarounds.
 
@@ -36,7 +34,7 @@ Read the person’s direct-report profile before gathering delivery data. Its `D
 
 For the person being prepared for, use this directory:
 
-`$HOME/Documents/obsidian/work_usertesting/people/[person-id]/`
+`<Obsidian vault>/people/[person-id]/`
 
 Before creating the new meeting note, read recent existing notes in that directory, especially prior 1:1 notes matching:
 

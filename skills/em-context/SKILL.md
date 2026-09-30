@@ -1,6 +1,7 @@
 ---
 name: em-context
-description: Foundation skill for engineering managers. Use when setting up context about your team, org structure, management philosophy, and current priorities. All other EM skills read this first. Also use when creating or updating a direct report profile. Trigger phrases: "set my team context," "update my EM context," "here's my team setup," "my team is," "my org is," "add a report," "update report profile," "create a profile for."
+description: >-
+  Foundation skill for engineering managers. Use when setting up context about your team, org structure, management philosophy, and current priorities. All other EM skills read this first. Also use when creating or updating a direct report profile. Trigger phrases: "set my team context," "update my EM context," "here's my team setup," "my team is," "my org is," "add a report," "update report profile," "create a profile for."
 metadata:
   version: 1.3.1
 ---
@@ -95,6 +96,9 @@ When in doubt, ask: "Will this still be useful and fair three months from now?"
 
 ```markdown
 # EM Context
+
+## Workspace
+- Obsidian vault:
 
 ## About Me
 - Role: (e.g., Engineering Manager, Senior EM, Director of Engineering)
