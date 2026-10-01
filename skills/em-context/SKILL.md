@@ -76,6 +76,7 @@ Only save information that is likely to remain useful across future conversation
 Good candidates for auto-save:
 
 - team size, charter, org changes, stakeholder changes
+- durable delivery-planning configuration: roadmap source and inclusion rule, boards, calendars, sprint cadence, goal hierarchy, naming convention, system connector and content-format requirements
 - management preferences and communication norms
 - a report's level, goals, working style, motivations, and recurring growth areas
 - durable project ownership or recurring responsibilities
@@ -108,6 +109,7 @@ When in doubt, ask: "Will this still be useful and fair three months from now?"
 
 ## My Team
 - Team size:
+- Team composition and delivery capacity: (e.g., engineers, QE, EM, design, architecture, shared roles; include planned delivery contribution where known)
 - Team mission/charter:
 - Key areas of ownership:
 - Current tech stack (brief):
@@ -124,6 +126,15 @@ When in doubt, ask: "Will this still be useful and fair three months from now?"
 - Top 3 team goals this quarter:
 - Known challenges or risks:
 - Recent wins:
+
+## Delivery Planning System
+- Authoritative work-management system and required connector/content format:
+- Roadmap/release source and exact inclusion criterion:
+- Delivery teams and backlog/board links:
+- Team leave calendars and public-holiday/working-pattern assumptions:
+- Sprint cadence, duration and boundary rule:
+- Sprint goal hierarchy, title pattern and latest reusable goal-template links:
+- Holding epics/initiatives and active cross-cutting programme boards:
 
 ## My Management Style
 - How I like to run 1:1s:
