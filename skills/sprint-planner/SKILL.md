@@ -2,7 +2,7 @@
 name: sprint-planner
 description: Plan the next sprint from release commitments, backlog readiness, team availability and recent delivery. Use for sprint planning, capacity checks, publishing goal-ready notes or delivery forecasting; not for retrospectives or changing work-management data without approval.
 metadata:
-  version: 1.3.0
+  version: 1.4.0
 ---
 
 # Sprint Planner
@@ -20,13 +20,15 @@ Write all prose in the user's documented language and spelling preference.
 Read `.agents/em-context.md` first. For this skill, use its **Delivery planning system** section, which should hold the durable, organisation-specific configuration that does not belong in a reusable skill:
 
 - roadmap/release source and the exact inclusion criterion;
-- team backlogs or boards, team leave calendars and any other capacity source;
+- delivery-team rosters and planned capacity roles, team backlogs or boards, team leave calendars and any other capacity source;
 - goal hierarchy, naming convention, goal-template links and sprint duration/boundary rule;
 - local sprint-goal publication directory and whether an external goal tool is a manual publishing destination;
 - the authoritative system connector and required content format;
 - known holding epics, cross-cutting programmes, working patterns and local public-holiday assumptions.
 
 Do not hard-code an organisation, team, product, URL, board, project key or work-item type in this skill. If the delivery-planning section is missing or lacks a material input, ask for it, then add the durable fact to `.agents/em-context.md` before preparing a detailed plan. Do not save a one-off absence, a proposed scope change, or a temporary risk as durable context.
+
+Use the structured delivery-team roster in the **Delivery Planning System** section to populate the matching note's `individualContributors` and `teamLeads` Dataview arrays. Copy every person and role exactly; set each `days` value from the current sprint's calendar or approved plan. Verify roster changes against the latest approved team plan or with the user. Retrieve PTO, public holidays and other sprint-specific availability from the relevant calendar or approved plan; never reuse a prior sprint's absence days as current capacity.
 
 Use the configured system's native connector or MCP for retrieving and changing its data. Do not use a browser as a substitute when a configured connector is available.
 
@@ -80,9 +82,11 @@ Use the lower credible forecast if a material release dependency, unusually high
 
 ## Draft and publish the planning tree
 
-Where the configured model uses a parent goal and child team goals, draft one parent note and one note per delivery team. The parent description is concise natural-language text covering the combined externally meaningful outcome, risk reduction, overall capacity constraint and any material decision or risk. It is not a concatenation of team task lists.
+Where the configured model uses a parent goal and child team goals, draft one parent note and one note per delivery team. The parent description is concise natural-language text covering the combined externally meaningful outcome, risk reduction, overall capacity constraint and any material decision or risk. Follow it with **Sprint focus** and **Capacity and dependencies** when they improve scanability. It is not a concatenation of team task lists.
 
-Use the configured live goal format, guided by [the goal template](references/goal-template.md). Each team note is a portfolio view, not a ticket dump: represent every project once in its relevant lane as a linked Jira epic or initiative followed by a short, nested objective, confidence and project lead. The objective must state the meaningful sprint end state: a percentage/milestone of the epic, release readiness, or verification. Do not invent a completion percentage; use release or verification wording when no evidenced percentage exists. Write `N/A` when Planning / Upcoming or Discovery has no work. Keep team allocation out of the parent but explicit in the appropriate team note.
+Use the configured live goal format, guided by [the goal template](references/goal-template.md). Each team note is a portfolio view, not a ticket dump: represent every project in its relevant lane as a linked Jira epic or initiative followed by a short, nested objective and named lead. The objective must state the meaningful sprint end state: a percentage/milestone of the epic, release readiness, or verification. Do not invent a completion percentage or confidence label; state delivery risk in the objective or parent dependency summary when the evidence supports it. Write `N/A` when Planning / Upcoming or Discovery has no work. Keep team allocation out of the parent but explicit in the appropriate team note.
+
+An initiative may appear in more than one team note when the teams have distinct, named contributions (for example, a shared release gate or programme milestone). Make each team's objective and lead specific; do not present the same full commitment twice.
 
 When the user asks to publish the plan, create the configured local notes with Obsidian-compatible frontmatter. Add wikilinks between the parent and team notes when they share a directory, and retain normal Markdown links for external systems. Use compact tables for capacity figures and absences rather than dense capacity bullet lists. Mark the notes as `ready-to-publish` unless a material evidence gap means they need review. Do not make the ability to write an external goal a prerequisite for publishing the local artefact.
 
@@ -91,7 +95,7 @@ Before proposing the plan, run this quality gate:
 - Every roadmap release in the sprint window that depends on the teams is represented, explicitly deferred or marked at risk.
 - Each must-deliver outcome has an owner, measurable end state, verification/release path and dependency status.
 - Each team’s committed points and ticket count fit its adjusted forecast and capacity after contingency.
-- Work is not double-counted across teams; hand-offs have a named receiving owner and date.
+- Cross-team initiatives have distinct team contributions; hand-offs have a named receiving owner and date.
 - Maintenance, bugs and cross-cutting programme capacity are visible rather than absorbed into an implausible feature commitment.
 - The parent says what the organisation gets; the team goals say how each team will deliver it.
 

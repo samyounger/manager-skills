@@ -21,6 +21,53 @@ Then calculate:
 
 Account for part-time patterns, travel, company ceremonies, support rotations, onboarding, interviews, cross-team help and planned release/QE work when they materially displace delivery. Do not count calendar entries as leave until their attendee/status/date make that interpretation credible; flag ambiguous events for confirmation.
 
+## Obsidian Dataview presentation
+
+When the local sprint-goal notes use DataviewJS, copy the matching team's named `individualContributors` and `teamLeads` roster from `.agents/em-context.md` into the block. Preserve roles, list individual contributors separately from team leads and partners, and set `days` from the current sprint's absence data. Count only individual-contributor absences in engineering capacity, while retaining lead and partner PTO for awareness. Keep the calculation inputs at the top of the block so the plan owner can refine them directly.
+
+```javascript
+const individualContributors = [
+  // Copy the matching team's named roster from .agents/em-context.md.
+  { person: "<name>", role: "Engineer", days: 0 },
+];
+
+const teamLeads = [
+  // Copy the matching team's named roster from .agents/em-context.md.
+  { person: "<name>", role: "EM", days: 0 },
+];
+
+const engineers = individualContributors.length;
+const workingDaysPerEngineer = <working days>;
+const baselineDays = engineers * workingDaysPerEngineer;
+const icPtoDays = individualContributors.reduce((sum, entry) => sum + entry.days, 0);
+const leadPtoDays = teamLeads.reduce((sum, entry) => sum + entry.days, 0);
+const availableDays = baselineDays - icPtoDays;
+const availability = availableDays / baselineDays;
+
+dv.header(2, "Team PTO");
+dv.header(3, "Individual contributors — included in sprint capacity");
+dv.table(["Person", "Role", "Days"], [
+  ...individualContributors.map(entry => [entry.person, entry.role, entry.days]),
+  ["**Total**", "", `**${icPtoDays}**`],
+]);
+dv.header(3, "Team leads and partners — excluded from sprint capacity");
+dv.table(["Person", "Role", "Days"], [
+  ...teamLeads.map(entry => [entry.person, entry.role, entry.days]),
+  ["**Total**", "", `**${leadPtoDays}**`],
+]);
+dv.header(2, "Capacity plan");
+dv.table(["Capacity measure", "Plan"], [
+  ["Contributors", `${engineers} engineers`],
+  ["Engineering baseline", `${engineers} engineers × ${workingDaysPerEngineer} days = ${baselineDays} engineering people-days`],
+  ["IC PTO affecting capacity", `${icPtoDays} days`],
+  ["Engineering capacity", `${availableDays} engineering people-days (${Math.round(availability * 100)}%)`],
+  ["Protected contingency", "<percentage>% non-feature delivery"],
+  ["Team lead and partner PTO", `${leadPtoDays} days — tracked for awareness only`],
+]);
+```
+
+Use this only in a fenced `dataviewjs` block. Calculate the parent-note total by adding the teams' available engineering people-days and PTO days; do not include team-lead or partner days in either total.
+
 ## Hybrid forecast
 
 Story points cover only pointed work; ticket throughput captures bugs, technical debt, migrations and other unpointed work. Track both per team and use neither as a performance target.
@@ -55,4 +102,3 @@ For every must-deliver item, give a confidence label grounded in evidence:
 - **Low:** material unknown, blocked work, absent owner, insufficient capacity or an unconfirmed release need; do not present it as a normal commitment.
 
 The suitable response to low confidence is a decision or scope reduction, not hiding the risk in a broad sprint goal.
-
