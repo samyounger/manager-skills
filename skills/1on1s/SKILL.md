@@ -2,7 +2,7 @@
 name: 1on1s
 description: Prepares agendas, diagnoses struggling 1:1 relationships, and gives frameworks for running effective 1:1 meetings with direct reports. Use when the user wants to prepare for, run, improve, or follow up on a 1:1, or says "1:1 agenda," "prepare for my 1:1," "1:1 notes," "what should I talk about with," "my direct report," "check in with my report," "make my 1:1s better," "1:1 template," or "my 1:1s feel like status updates." Do NOT use when the user needs to deliver specific feedback (use feedback) or discuss performance reviews (use performance-reviews).
 metadata:
-  version: 2.5.0
+  version: 2.5.1
 ---
 
 # 1:1s
@@ -56,16 +56,15 @@ tags:
   - [person-id]
 reporting_period_start: YYYY-MM-DD
 reporting_period_end: YYYY-MM-DD
-delivery_counts:
-  user_story: null
-  sub_task: null
-  task: null
-  bug: null
-  support_issue: null
+delivery_user_story: null
+delivery_sub_task: null
+delivery_task: null
+delivery_bug: null
+delivery_support_issue: null
 ---
 ```
 
-After gathering delivery data, populate the reporting-period and `delivery_counts` properties. These frontmatter fields are the canonical machine-readable record for the note; a missing or `null` value is not zero. Keep qualitative evaluation, evidence, context, quality, communication, and charts in the note body. Do not maintain a separate body copy of the counts unless it is needed for the conversation.
+After gathering delivery data, populate the reporting-period and the five `delivery_*` properties. Keep these as flat numeric properties: Obsidian’s Properties editor does not support nested mappings. Use the Number property type for these fields, leaving unknown values empty or `null`. These frontmatter fields are the canonical machine-readable record for the note; a missing or `null` value is not zero. Keep qualitative evaluation, evidence, context, quality, communication, and charts in the note body. Do not maintain a separate body copy of the counts unless it is needed for the conversation.
 
 Fetch data from the prior two weeks that covers:
 - Jira tickets completed attributed to that user, using their Jira account ID.
@@ -118,7 +117,7 @@ Useful prompts include:
 
 ### Six-Month Delivery Trend
 
-Read the person’s prior 1:1 notes from the preceding six months. Extract each measurement from the `reporting_period_start`, `reporting_period_end`, and `delivery_counts` frontmatter properties. For older notes that predate these properties, use a body measurement only when it explicitly records both the reporting period and ticket-delivery counts. Do not treat absent data as zero, recreate historical counts from memory, or sum overlapping reporting periods.
+Read the person’s prior 1:1 notes from the preceding six months. Extract each measurement from the `reporting_period_start`, `reporting_period_end`, and the five flat `delivery_*` frontmatter properties. For legacy notes with nested `delivery_counts`, read the corresponding issue-type values from that mapping instead; never add both formats together. For older notes that predate these properties, use a body measurement only when it explicitly records both the reporting period and ticket-delivery counts. Do not treat absent data as zero, recreate historical counts from memory, or sum overlapping reporting periods.
 
 Add a `## Delivery trend (last six months)` section to the new note when at least three comparable reporting periods exist. Start with an auditable table, then add an inline Mermaid bar chart of the total completed tickets for each reporting period. A total is the sum of the listed issue-type counts, including sub-tasks. Label each bar with the end date of its reporting period, and call it **reported ticket delivery** rather than output or performance.
 
