@@ -2,7 +2,7 @@
 name: bug-refinement
 description: Investigate and refine engineering bugs into concise, evidence-backed Jira tickets with root cause, severity, reproduction steps, BDD acceptance criteria, API response contracts and observability requirements. Use for “refine this bug”, “investigate this error”, or “make this bug ticket implementation-ready”. Does not authorise implementing or deploying the fix.
 metadata:
-  version: 1.2.7
+  version: 1.2.9
 ---
 
 # Bug Refinement
@@ -13,7 +13,7 @@ Turn a reported failure into an engineer-readable ticket that explains the issue
 
 Read `$HOME/.agents/manager-skills/.agents/em-context.md` when present; otherwise read `.agents/em-context.md` or `.agents/skills/em-context/SKILL.md` if available. Use established team ownership and priorities without inventing missing context.
 
-Read the current ticket and applicable repository `AGENTS.md` files. Preserve user edits, references and separate custom fields. An instruction to investigate and update a named ticket authorises those updates; a request for a draft alone does not. An authorised ticket refinement includes setting P-Severity and Priority after analysis, unless the user explicitly asks to preserve them. A draft-only request includes recommendations without Jira writes. Do not implement a fix, alter live customer data, change assignment/status/type, or send messages without authorisation for that action. Assess customer-impact severity independently of delivery priority.
+Read the current ticket, if supplied, and applicable repository `AGENTS.md` files. Preserve user edits, references and separate custom fields. An instruction to investigate and update a named ticket authorises those updates; a request for a draft alone does not. An authorised ticket refinement includes setting P-Severity and Priority after analysis, unless the user explicitly asks to preserve them. A draft-only request includes recommendations without Jira writes. Do not implement a fix, alter live customer data, change assignment/status/type, or send messages without authorisation for that action. Assess customer-impact severity independently of delivery priority.
 
 Use the available Jira workflow/tooling. In RAD, these rich-text field IDs are useful hints, not substitutes for field discovery:
 
@@ -23,7 +23,7 @@ Use the available Jira workflow/tooling. In RAD, these rich-text field IDs are u
 
 For RAD P-Severity and Priority, read [references/jira-triage-fields.md](references/jira-triage-fields.md). It contains the verified field keys, option IDs, write shape and selection guidance; these are dedicated fields, not entries in Jira `labels`. Request these fields alongside the rich-text fields in the same issue/edit-metadata read.
 
-Read the exact issue's edit metadata and confirm each required field's name and `set` operation before writing. A visible field is not necessarily editable. If required fields are unavailable, prepare the complete refinement, then explain the specific limitation and ask how to proceed. Do not silently put reproduction steps in the description or change the issue type to bypass the limitation. Prefer one coupled update after resolving it.
+For an existing ticket, read the exact issue's edit metadata and confirm each required field's name and `set` operation before writing. A visible field is not necessarily editable. If required fields are unavailable, prepare the complete refinement, then explain the specific limitation and ask how to proceed. Do not silently put reproduction steps in the description or change the issue type to bypass the limitation. Prefer one coupled update after resolving it.
 
 ## Investigation
 
@@ -35,6 +35,28 @@ Read the exact issue's edit metadata and confirm each required field's name and 
 6. Recommend the smallest sound root-cause fix. Explain trade-offs where a workaround leaves the underlying design intact. Preserve transaction, missing-row, concurrency, permission, draft-only, omitted-field and event semantics relevant to the path. Propose focused regression coverage; distinguish source-derived reproduction from an executed reproduction.
 
 Report severity from customer impact, recoverability, scope and data integrity. A successful internally recovered operation normally requires no client retry; operational noise and database cost can still justify a fix. Explicitly state what remains unverified.
+
+## Find or create the target ticket after diagnosis
+
+After diagnosing the root cause, search the owning team's Jira backlog before creating a ticket. Use established team context, repository ownership and the affected service to identify the correct project and team scope. If ownership cannot be established, finish the investigation and ask only for the missing routing information.
+
+- Search using several relevant terms: the affected behaviour, service/component, endpoint, error signature and root-cause mechanism. Inspect likely candidates' descriptions and evidence; a similar title or shared error code alone is not a match. Include resolved tickets in a wider check for regressions or prior fixes rather than assuming an active-backlog search proves the issue is new.
+- If a ticket covers the same issue, use it as the refinement target and link it in the findings. Preserve a user-named target unless the user authorises switching; link a matching existing ticket and explain the overlap instead of creating another bug or changing status to mark a duplicate.
+- If no matching ticket exists after a successful search, create one Bug in the owning team's project as part of the authorised investigation/refinement. Use the completed evidence-backed refinement and triage values below. A draft-only request or an explicit restriction on Jira writes still means no creation or updates. If matches are ambiguous, resolve the uncertainty before creating a ticket.
+
+Before creation, discover the project's Bug issue type and create metadata, including required fields and supported values. Write rich text as ADF. Populate the dedicated reproduction and acceptance fields at creation when supported; otherwise create with the supported fields, then confirm the new ticket's edit metadata before completing the coupled refinement. If required fields are unavailable, prepare the content and explain the specific limitation as above. Never treat a failed, inaccessible or incomplete search as evidence that no matching ticket exists. If creation returns an uncertain outcome, search for the attempted ticket before retrying to avoid duplicates.
+
+Record the search scope and whether a match was reused or a new bug was created. Continue through save verification and independent post-save review for either outcome.
+
+## PANDE backlog and parent epic — created and updated tickets
+
+For every authorised ticket creation or update, populate the Jira field or fields required for inclusion in **PANDE backlog**. Discover the actual field IDs, supported values and create/edit permissions from Jira metadata and, where needed, the backlog/board filter or verified team configuration. Preserve unrelated multi-value entries when adding the required values. Do not assume that PANDE backlog is a label, invent a field/value, or treat mentioning it in the description as setting the fields. If the mapping or write access is unavailable, prepare the refinement and report the specific missing information or access.
+
+Search the owning team's project for an existing parent epic whose complete summary matches `Test Flow bugs Q[1-4] YYYY` (for example, the pattern `^Test Flow bugs Q[1-4] [0-9]{4}$`). Verify that its issue type is Epic, its current status is **Developing**, and it is active/unresolved. Set the ticket's actual Parent/epic relationship field, as supported by Jira metadata, to the verified epic key; a link in prose is insufficient.
+
+If several eligible epics exist, use verified team context to identify the intended quarter/year; if still ambiguous, ask for the intended epic rather than choosing arbitrarily. If a successful search finds no eligible epic, leave Parent blank, including clearing an existing non-qualifying parent where editable, and report that no eligible epic was found. Never create, invent, rename or transition an epic to satisfy this rule. A failed or inaccessible search does not establish that no epic exists; report that limitation before changing an existing parent.
+
+Include the backlog fields and Parent in the completed creation/update, subject to explicit user instructions to preserve particular fields. If a field can only be set after creation, confirm edit metadata and complete it on the new ticket. These requirements do not authorise Jira writes for a draft-only request.
 
 ## Set severity and priority after analysis
 
@@ -77,6 +99,8 @@ Write Proposed solution as a clear, affirmative description of the chosen implem
 
 - **Description:** issue, severity, timeline, source-backed root cause, proposed implementation approach, concise observability summary, collapsed evidence/log examples and critical references.
 - **P-Severity and Priority:** dedicated Jira fields holding the selected impact and urgency values; use option objects, with their separate rationales in the description.
+- **PANDE backlog:** the verified Jira field/value combination required by the backlog configuration.
+- **Parent:** the verified active Developing epic matching `Test Flow bugs Q[1-4] YYYY`, or blank when no eligible epic exists.
 - **Steps to Reproduce:** the dedicated editable custom field; use an ordered list.
 - **Acceptance Criteria:** the dedicated editable custom field; use concise nested BDD bullets. This is the sole home for future pass/fail outcomes and verification requirements, including observability outcomes.
 
@@ -88,7 +112,7 @@ Do not disguise acceptance criteria as “Verification:”, “Validation”, �
 
 Before saving, remove acceptance/verification checklists from the description and ensure every necessary unique outcome is covered once in the Acceptance Criteria custom field. Keep the description to the issue, evidence, causal explanation and proposed approach; factual observed results and reproduction status are evidence, not new acceptance requirements. Also remove repeated outcomes, references already supplied by an endpoint mapping, unnecessary new mechanisms and claims unsupported by source. Preserve important customer/contract guarantees when shortening; omit irrelevant template sections rather than filling them mechanically.
 
-For an authorised update, write the completed rich-text fields together with P-Severity and Priority, then read them back. Confirm both triage fields store the intended option IDs and names. Read the rich-text fields back in ADF. Verify the stored headings, expand, links, code marks, reference bullets, ordered steps and nested criteria, alongside the actual text. Some connectors flatten ADF in structured results while retaining raw ADF in their text response; inspect the raw representation before assuming formatting was lost. Ignore Jira-generated `localId` values when comparing semantic structure.
+For an authorised update, write the completed rich-text fields together with P-Severity and Priority, then read them back. Confirm both triage fields store the intended option IDs and names. Read back the PANDE backlog fields and Parent; verify backlog inclusion against its configuration and recheck the selected epic's exact summary, issue type, Developing status and unresolved state, or confirm Parent is blank when no eligible epic was found. Read the rich-text fields back in ADF. Verify the stored headings, expand, links, code marks, reference bullets, ordered steps and nested criteria, alongside the actual text. Some connectors flatten ADF in structured results while retaining raw ADF in their text response; inspect the raw representation before assuming formatting was lost. Ignore Jira-generated `localId` values when comparing semantic structure.
 
 If a write fails, use its schema/error to make a bounded correction; do not cycle formats blindly or overwrite unrelated fields. If an expand is unsupported, explain the limitation before substituting a different layout.
 
@@ -104,6 +128,7 @@ The reviewer checks the applicable requirements across the whole ticket:
 - Proposed solution states the chosen approach clearly; dismissed alternatives, when relevant, form a concise numbered list with reasons.
 - Reproduction steps and concise, non-duplicated BDD Acceptance Criteria occupy their dedicated fields; requirements appear once, and necessary outcomes have not been lost during shortening.
 - P-Severity and Priority match the evidence, separate rationales and permitted option values, subject to explicit user exceptions.
+- The verified PANDE backlog fields are populated. Parent references an existing active/unresolved Epic in Developing whose summary matches `Test Flow bugs Q[1-4] YYYY`, or is blank after a successful search found no eligible epic; respect explicit field-preservation exceptions.
 - Native headings, lists, code marks, links and collapsed Evidence/logging expands follow the skill, with no unsupported contract changes or unnecessary scope.
 
 Keep the review read-only. Ask for a pass/fail verdict, concise actionable findings with exact field/section and supporting evidence, and any checks that could not be completed. An unavailable source is an explicit review limitation, not proof that a claim is false or verified.
