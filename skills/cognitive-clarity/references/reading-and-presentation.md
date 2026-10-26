@@ -16,6 +16,24 @@ Start with a plain-English explanation and one concrete example. Introduce neces
 
 Offer alternative representations when useful: a short example, a small diagram, or a compact comparison. Do not automatically generate all three. A visual should reduce reading effort and have a short text explanation.
 
+## Reduce effort within sentences
+
+Use these practices when editing explanations, proposals, and updates:
+
+- Unpack noun stacks into explicit relationships. For example, change “customer feedback triage workflow optimisation” to “improve how we sort customer feedback and decide what to act on”.
+- Keep the subject and its verb close together. Move long qualifications into another sentence when that makes the connection clearer.
+- Keep helpful connecting words. Do not routinely remove “that”, “which”, “because”, or “so” just to shorten a sentence. Split embedded clauses when readers would otherwise have to hold several ideas in memory.
+- Prefer familiar phrases and concrete verbs. Replace an invented verb or a metaphor when interpreting it adds effort. Preserve established technical terms when they help the intended audience.
+- Check the reading burden of the whole answer. Remove repetition, but retain the context, examples, and causal links needed to understand it. A string of short fragments can still be difficult to follow.
+
+These are editing judgements, not blanket bans or fixed sentence-length targets.
+
+## Evidence and its limits
+
+[Clark, Martin and Mahowald (2026), *Why is AI-generated language so hard to understand?*](https://arxiv.org/html/2610.29162v1) found that many models overused linguistic features associated with human processing difficulty. A separate experiment showed that penalising response length could shift a small model towards shorter grammatical forms, with some transfer to untrained constructions.
+
+The practices above are an application of those findings, not a remedy validated by the study. It measured linguistic indicators, not reader comprehension, and did not specifically study dyslexia. Its English-only data and limited conversation seeds restrict generalisation. It does not establish the cause of commercial models' writing patterns or show that every short form, metaphor, or noun compound is difficult.
+
 ## Instructions
 
 Use numbered steps with one clear action per step. Keep commands in separate code blocks. Place a necessary caution immediately before the affected action. State the expected result or check when needed.
