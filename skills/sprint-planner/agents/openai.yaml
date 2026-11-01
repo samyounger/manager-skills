@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sprint Planner"
+  short_description: "Plan and publish sprint-goal notes"
+  default_prompt: "Use $sprint-planner to publish local, goal-ready notes for the next sprint from roadmap demand, backlog readiness, team availability and recent delivery."

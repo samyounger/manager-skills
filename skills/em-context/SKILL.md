@@ -1,8 +1,9 @@
 ---
 name: em-context
-description: Foundation skill for engineering managers. Use when setting up context about your team, org structure, management philosophy, and current priorities. All other EM skills read this first. Also use when creating or updating a direct report profile. Trigger phrases: "set my team context," "update my EM context," "here's my team setup," "my team is," "my org is," "add a report," "update report profile," "create a profile for."
+description: >-
+  Foundation skill for engineering managers. Use when setting up context about your team, org structure, management philosophy, and current priorities. All other EM skills read this first. Also use when creating or updating a direct report profile. Trigger phrases: "set my team context," "update my EM context," "here's my team setup," "my team is," "my org is," "add a report," "update report profile," "create a profile for."
 metadata:
-  version: 1.3.0
+  version: 1.3.1
 ---
 
 # EM Context
@@ -75,6 +76,7 @@ Only save information that is likely to remain useful across future conversation
 Good candidates for auto-save:
 
 - team size, charter, org changes, stakeholder changes
+- durable delivery-planning configuration: roadmap source and inclusion rule, boards, calendars, sprint cadence, goal hierarchy, naming convention, system connector and content-format requirements
 - management preferences and communication norms
 - a report's level, goals, working style, motivations, and recurring growth areas
 - durable project ownership or recurring responsibilities
@@ -96,6 +98,9 @@ When in doubt, ask: "Will this still be useful and fair three months from now?"
 ```markdown
 # EM Context
 
+## Workspace
+- Obsidian vault:
+
 ## About Me
 - Role: (e.g., Engineering Manager, Senior EM, Director of Engineering)
 - Years as EM:
@@ -104,6 +109,7 @@ When in doubt, ask: "Will this still be useful and fair three months from now?"
 
 ## My Team
 - Team size:
+- Team composition and delivery capacity: (e.g., engineers, QE, EM, design, architecture, shared roles; include planned delivery contribution where known)
 - Team mission/charter:
 - Key areas of ownership:
 - Current tech stack (brief):
@@ -120,6 +126,15 @@ When in doubt, ask: "Will this still be useful and fair three months from now?"
 - Top 3 team goals this quarter:
 - Known challenges or risks:
 - Recent wins:
+
+## Delivery Planning System
+- Authoritative work-management system and required connector/content format:
+- Roadmap/release source and exact inclusion criterion:
+- Delivery teams and backlog/board links:
+- Team leave calendars and public-holiday/working-pattern assumptions:
+- Sprint cadence, duration and boundary rule:
+- Sprint goal hierarchy, title pattern and latest reusable goal-template links:
+- Holding epics/initiatives and active cross-cutting programme boards:
 
 ## My Management Style
 - How I like to run 1:1s:
@@ -148,6 +163,10 @@ Create one file per person at `.agents/reports/[firstname].md`:
 - Level: (e.g., L4, Senior, Staff)
 - Tenure on team:
 - Background / how they joined:
+
+## Delivery System IDs
+- Jira account ID:
+- GitHub username:
 
 ## Strengths
 - [What they're genuinely good at — specific, not generic]
