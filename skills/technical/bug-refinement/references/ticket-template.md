@@ -21,6 +21,10 @@ One short paragraph: trigger, expected behaviour, observed behaviour and custome
 **First confirmed:** date, environment and linked occurrence, or “Not established”.
 **Suspected onset:** date and source, if different. **Code/deployment context:** only when established. State why retention, sampling or issue grouping limits the conclusion. Render human dates in en-GB; include timezone for exact occurrence times.
 
+#### Recent changes
+
+Summarise the required two-week TestFlow PR review from `SKILL.md`: give the window and whether a recent change is a plausible/confirmed cause, no relationship was found, or attribution remains unverified. Link each plausible causal PR and its verified Jira ticket; explain any missing ticket link. Keep detailed search scope, deployment evidence and dismissed candidates in the Evidence expand. Follow the skill's Jira-comment rule when a successful review finds no relationship.
+
 ### Root cause
 
 Explain the causal chain in a short paragraph: frontend/caller, server operation, defective behaviour, recovery/failure and outcome. State confidence. Reference the endpoint mapping bullets instead of repeatedly restating unlinked routes. A hypothesis remains labelled until verified.

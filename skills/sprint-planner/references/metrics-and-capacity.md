@@ -1,5 +1,11 @@
 # Capacity and hybrid delivery metrics
 
+## Display rounding
+
+Show every capacity figure without decimal places, rounded to the nearest whole number; halves round up. This applies to prose, table cells and rendered Dataview values: individual absences, hours/days, people-days, historical medians, percentages, gross forecasts and final ticket/point allowances. Show a capacity factor as a rounded percentage, not a decimal multiplier.
+
+Retain exact source values and full precision internally. Apply the reserve to the unrounded forecast, then round the result; do not calculate using a displayed rounded median, percentage or subtotal. Calculate totals from exact inputs. Rounded individual rows may differ from rounded totals; explain this briefly instead of changing source data. Reconcile integer ticket categories to their rounded total using the largest-remainder method below.
+
 ## Capacity worksheet
 
 Use one worksheet per team.
@@ -36,6 +42,7 @@ const teamLeads = [
   { person: "<name>", role: "EM", days: 0 },
 ];
 
+const displayWhole = value => Math.round(value);
 const engineers = individualContributors.length;
 const workingDaysPerEngineer = <working days>;
 const baselineDays = engineers * workingDaysPerEngineer;
@@ -47,51 +54,78 @@ const availability = availableDays / baselineDays;
 dv.header(2, "Team PTO");
 dv.header(3, "Individual contributors — included in sprint capacity");
 dv.table(["Person", "Role", "Days"], [
-  ...individualContributors.map(entry => [entry.person, entry.role, entry.days]),
-  ["**Total**", "", `**${icPtoDays}**`],
+  ...individualContributors.map(entry => [entry.person, entry.role, displayWhole(entry.days)]),
+  ["**Total**", "", `**${displayWhole(icPtoDays)}**`],
 ]);
 dv.header(3, "Team leads and partners — excluded from sprint capacity");
 dv.table(["Person", "Role", "Days"], [
-  ...teamLeads.map(entry => [entry.person, entry.role, entry.days]),
-  ["**Total**", "", `**${leadPtoDays}**`],
+  ...teamLeads.map(entry => [entry.person, entry.role, displayWhole(entry.days)]),
+  ["**Total**", "", `**${displayWhole(leadPtoDays)}**`],
 ]);
 dv.header(2, "Capacity plan");
 dv.table(["Capacity measure", "Plan"], [
   ["Contributors", `${engineers} engineers`],
-  ["Engineering baseline", `${engineers} engineers × ${workingDaysPerEngineer} days = ${baselineDays} engineering people-days`],
-  ["IC PTO affecting capacity", `${icPtoDays} days`],
-  ["Engineering capacity", `${availableDays} engineering people-days (${Math.round(availability * 100)}%)`],
+  ["Engineering baseline", `${engineers} engineers × ${displayWhole(workingDaysPerEngineer)} days = ${displayWhole(baselineDays)} engineering people-days`],
+  ["IC PTO affecting capacity", `${displayWhole(icPtoDays)} days`],
+  ["Engineering capacity", `${displayWhole(availableDays)} engineering people-days (${Math.round(availability * 100)}%)`],
   ["Protected contingency", "<percentage>% non-feature delivery"],
-  ["Team lead and partner PTO", `${leadPtoDays} days — tracked for awareness only`],
+  ["Team lead and partner PTO", `${displayWhole(leadPtoDays)} days — tracked for awareness only`],
 ]);
 ```
 
 Use this only in a fenced `dataviewjs` block. Calculate the parent-note total by adding the teams' available engineering people-days and PTO days; do not include team-lead or partner days in either total.
 
-## Hybrid forecast
+## Six-sprint forecast
 
-Story points cover only pointed work; ticket throughput captures bugs, technical debt, migrations and other unpointed work. Track both per team and use neither as a performance target.
+Use the **six most recent completed sprints per team**, ordered by actual completion time. Exclude active/future sprints and paginate all issue results. Keep all six, including unusual sprints, and explain material changes in work mix or team size. If fewer exist, label the sample limitation.
 
-For each of the most recent three to five completed sprints, collect:
+| Sprint / actual dates | Working days | Historical contributors | Available people-days | Stories | Tasks | Bugs | Other | Total tickets | Completed SP |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 
-| Sprint | Available people-days | Committed SP at start | Completed SP at close | Committed tickets at start | Completed tickets at close | Added after start | Unplanned completed | Spillover | Work-type mix | Release outcome |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|
+Also retain committed-at-start measures, additions, unplanned completed work, spillover reasons and release outcomes when available. Never infer the original commitment from current sprint membership.
 
-Rules:
+### Counting and historical capacity
 
-- Count a story point only when its issue was completed by sprint close. Do not award partial points.
-- Count completed tickets across the agreed issue types, but keep sub-tasks and duplicate/administrative items consistently included or excluded. State the rule.
-- Preserve the original committed baseline. Report scope added after the sprint began separately rather than treating it as planned delivery.
-- Use a trailing median, not a single best sprint. Exclude or annotate an abnormal sprint only with a recorded reason (team change, extended incident, unusual leave, or an exceptional release).
-- Adjust for availability when it differs meaningfully. Compare points per available people-day and tickets per available people-day as a diagnostic, not an incentive.
-- Segment by work type: release/feature, bugs, maintenance/tech debt, migration, discovery and support. A stable overall ticket count can conceal an unsustainable change in mix.
+- Prefer a completed-at-close report. Otherwise reconstruct from sprint membership and resolution instants between actual start and close; label the result as a proxy affected by later reopening, membership edits and re-estimation.
+- Exclude subtasks and epic/initiative wrappers. Deduplicate issue keys within each sprint. Count Stories/User Stories, Tasks and Bugs separately; report Support Issues, Vulnerabilities and any other included top-level types as Other. State the mapping so total tickets equals the sum of categories.
+- Sum points only on completed included tickets. Zero or absent points are not zero effort. Never award partial points or convert ticket counts to points.
+- Reconstruct each sprint's contributor roster, working days and calendar losses. Apply part-time patterns, holidays and known non-delivery time; deduplicate overlapping absences. Exclude leads/partners unless an allocation is known. Do not copy today's headcount backwards or reuse another sprint's leave.
+- Where records conflict or are missing, ask for the historical roster/pattern, document the chosen evidence and label estimates or sensitivity scenarios. Keep medical details out of the published plan.
 
-Suggested planning table:
+### Calculate the planning allowances
 
-| Team | Availability | Trailing median SP | Availability-adjusted SP forecast | Trailing median tickets | Availability-adjusted ticket forecast | Protected contingency | Must-deliver commitment | Pull items |
-|---|---:|---:|---:|---:|---:|---:|---|---|
+For each team independently:
 
-If points and ticket throughput point in different directions, do not average them. Explain the work-mix change and size the commitment to the constrained measure. Do not compare point totals between teams: point scales are local.
+```text
+capacity factor = new available people-days / median(historical available people-days over six sprints)
+gross ticket estimate = median(completed total tickets over six sprints) × capacity factor
+gross point estimate = median(completed story points over six sprints) × capacity factor
+planned ticket allowance = round(gross ticket estimate × (1 − reserve fraction))
+planned point allowance = round(gross point estimate × (1 − reserve fraction))
+```
+
+For an even sample, median is the average of the two central values. Retain full precision for the calculation; display medians, gross estimates, reserve percentage/people-days and final allowances rounded to the nearest whole number. Show final allowances and any further dependency-driven reduction. Treat these as estimates, not targets. A known QE bottleneck, material team change or larger work items can justify a lower commitment.
+
+For each ticket category, calculate `category share = completed category tickets across six sprints / completed total tickets across six sprints`. Multiply shares by the planned ticket allowance. Floor each category and distribute the remaining whole tickets to the largest fractional remainders, using Stories, Tasks, Bugs, Other as the stable tie-break order. This reconciles Stories + Tasks + Bugs + Other to the total; independent category medians generally do not. The indicative mix may be changed for known demand while staying within total/point/capacity limits; explain a material change. Flag an exceptional bug-heavy sprint's effect on the mix.
+
+Apply the reserve once. Planned bugs and maintenance count in the baseline allowance; urgent work added later uses the protected reserve. Do not double-count the same known repair as both planned scope and contingency. Keep pull work outside the baseline. A point allowance and a ticket allowance describe different constraints; do not add, average or compare point scales across teams.
+
+### Required team-note presentation
+
+Each team's Capacity planning section starts with **Summary for Atlassian**, following [the goal template](goal-template.md): a short copy-ready bullet summary of sprint dates, absent contributors and rounded days (or no recorded absence), delivery capacity after reserve, recommended stories/tasks/bugs/Other, total tickets and story points. Show only the necessary whole-number recommendations and one sentence about carry-over/verification. Ensure the category counts sum to the total. Keep the block self-contained and normally within 150 words.
+
+Place **Supporting detail** beneath it. This contains the team's six-row history table, calendar/Dataview capacity inputs, assumptions and a compact forecast table:
+
+| Metric | Six-sprint baseline | Gross availability-adjusted estimate | After reserve / planning allowance |
+| --- | ---: | ---: | ---: |
+| Stories | Six-sprint completed count/share | Indicative share of gross tickets | Reconciled whole-ticket estimate |
+| Tasks | Six-sprint completed count/share | Indicative share of gross tickets | Reconciled whole-ticket estimate |
+| Bugs | Six-sprint completed count/share | Indicative share of gross tickets | Reconciled whole-ticket estimate |
+| Other included types | Six-sprint completed count/share | Indicative share of gross tickets | Reconciled whole-ticket estimate |
+| Total tickets | Median completed total | Gross ticket estimate | Whole-ticket allowance |
+| Story points | Median completed points | Gross point estimate | Whole-point allowance |
+
+State historical median people-days, new available people-days, the capacity factor as a whole-number percentage, reserve and the counting method. Display all figures rounded to whole numbers; compute from the unrounded inputs. Separate implementation and verification days. Explain work-mix changes and unresolved assumptions. Retain original commitments, additions and completed-at-close measures for the next forecast.
 
 ## Delivery-confidence test
 

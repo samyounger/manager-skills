@@ -2,7 +2,11 @@
 name: bug-refinement
 description: Investigate and refine engineering bugs into concise, evidence-backed Jira tickets with root cause, severity, reproduction steps, BDD acceptance criteria, API response contracts and observability requirements. Use for “refine this bug”, “investigate this error”, or “make this bug ticket implementation-ready”. Does not authorise implementing or deploying the fix.
 metadata:
+<<<<<<< Updated upstream
   version: 1.2.9
+=======
+  version: 1.2.11
+>>>>>>> Stashed changes
 ---
 
 # Bug Refinement
@@ -35,6 +39,20 @@ For an existing ticket, read the exact issue's edit metadata and confirm each re
 6. Recommend the smallest sound root-cause fix. Explain trade-offs where a workaround leaves the underlying design intact. Preserve transaction, missing-row, concurrency, permission, draft-only, omitted-field and event semantics relevant to the path. Propose focused regression coverage; distinguish source-derived reproduction from an executed reproduction.
 
 Report severity from customer impact, recoverability, scope and data integrity. A successful internally recovered operation normally requires no client retry; operational noise and database cost can still justify a fix. Explicitly state what remains unverified.
+
+## Recent TestFlow PR review — required
+
+Review PRs merged by the TestFlow teams during the previous two weeks before completing the diagnosis. Use the 14 days ending at the investigation time, record the exact dates/timezone, and honour an explicitly requested different window. Identify Test Pilots and Feedback Loopers from verified team context and repository ownership; do not guess membership from names or treat a keyword-only PR search as complete team coverage.
+
+Search the teams' merged PRs across the repositories involved in the failing path. Inspect relevant diffs and linked Jira issues, including caller behaviour, shared libraries, dependencies, feature flags and rollout changes that could expose an older defect. Use file history to distinguish newly introduced code from a longstanding bug. Check merge and deployment timing against the first confirmed failure where evidence permits: a merge alone does not prove production exposure, and a first retained error does not establish onset.
+
+Record a short **Recent changes** conclusion in the ticket description, with detailed search scope and candidate reasoning in the Evidence expand:
+
+- **Plausible or confirmed relationship:** link the actual GitHub PR and its verified Jira ticket in the bug, explain the causal mechanism, and label confidence as suspected or confirmed. Verify the Jira link from the PR or issue rather than constructing one from an unverified branch name. If no linked Jira ticket can be found or accessed, include the PR and state that limitation. Keep plausible candidates visible without presenting them as proven causes.
+- **No relationship found after a successful review:** say so with the reviewed window and scope. For an authorised Jira refinement, also add a concise native ADF Jira comment, for example: “No relationship to a recent TestFlow change was found in the two-week PR review (16–30 October 2026). The relevant changes reviewed affect Review-tab display; the failing ownership association predates this window.” Adapt the explanation to the actual evidence. This is a scoped finding, not proof that every recent change is unrelated.
+- **Incomplete or inaccessible review:** state which team/repository/history/deployment evidence is missing and leave attribution unverified. An incomplete search cannot justify the no-relationship comment. A draft-only request includes the conclusion and proposed comment in the draft without Jira writes.
+
+Keep one current recent-change assessment: update an existing assessment comment when permitted, or add one when absent, rather than repeating unchanged comments. Read back any saved comment with its links and ADF structure.
 
 ## Find or create the target ticket after diagnosis
 
@@ -125,6 +143,7 @@ Give the reviewer the ticket URL, this skill's absolute path, relevant reference
 The reviewer checks the applicable requirements across the whole ticket:
 
 - Evidence supports the impact, timeline, root cause and proposed approach; hypotheses and unverified outcomes remain labelled, and service attribution, endpoint mappings and source links are accurate.
+- The recent TestFlow PR review covers the recorded two-week window and verified team/repository scope. Suspected or confirmed causes link both the PR and verified Jira ticket (or explain a missing Jira link). A successful review finding no relationship has a scoped conclusion and, for an authorised refinement, a saved ADF comment; incomplete searches remain explicitly unverified. Retrieve the current comment when reviewing it.
 - Proposed solution states the chosen approach clearly; dismissed alternatives, when relevant, form a concise numbered list with reasons.
 - Reproduction steps and concise, non-duplicated BDD Acceptance Criteria occupy their dedicated fields; requirements appear once, and necessary outcomes have not been lost during shortening.
 - P-Severity and Priority match the evidence, separate rationales and permitted option values, subject to explicit user exceptions.

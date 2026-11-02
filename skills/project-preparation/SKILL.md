@@ -2,7 +2,7 @@
 name: project-preparation
 description: Prepare or update a Jira epic for an engineering project from product inputs. Use when a user is starting project discovery, asks to shape an epic, needs a Portfolio Status section, or wants product references and acceptance criteria captured before delivery planning.
 metadata:
-  version: 1.0.0
+  version: 1.0.1
 ---
 
 # Project Preparation
@@ -102,6 +102,13 @@ Include only sources that help someone understand or shape the project. Do not c
 ## Acceptance Criteria
 
 Store acceptance criteria in the dedicated Jira field, not in the description. Write criteria as observable product or workflow outcomes.
+
+**Actor terminology:** Always refer to the customer actor as **client** in acceptance criteria, rather than researcher, creator, customer or user. Use this term consistently in conditions and expected outcomes.
+
+For example:
+
+- When a client edits only node labels or task copy, or resumes without a relevant change:
+  - It should continue to identify earlier responses as belonging to a compatible definition.
 
 Good criteria:
 
