@@ -1,56 +1,42 @@
 ---
 name: preserve-my-voice
-description: Applies when the user asks for feedback on, a review of, or edits to their own written draft, including messages, emails, proposals and updates. Trigger phrases include "review my draft", "tidy this up", "does this read well?", "keep my voice" and "light edit". Does not apply to feedback about a person's performance or writing from scratch without a supplied draft.
+description: Applies when the user asks for feedback on or edits to their writing, or for new messages, emails, proposals, updates and other content written on their behalf in their voice. Trigger phrases include "review my draft", "tidy this up", "keep my voice", "light edit", "draft a message" and "write this as me". Does not apply merely because a task concerns another person's performance or asks for general advice.
 metadata:
-  version: 1.0.0
+  version: 1.2.0
 ---
 
 # Preserve My Voice
 
-Make the smallest useful changes so the draft still sounds like the user. The supplied draft is the primary evidence of their voice.
+Preserve the user's voice when editing their words or drafting on their behalf. Make the smallest useful changes to an existing draft; use the voice reference for new writing.
 
-## Before editing
+## Before writing
 
-For management drafts, read `.agents/em-context.md` if available, or `.agents/skills/em-context/SKILL.md` otherwise. Do not block editing or invent context if neither exists.
+For management writing, read `.agents/em-context.md` if available, otherwise `.agents/skills/em-context/SKILL.md`. Do not block or invent context if neither exists. Supporting skills must not introduce profile setup or file writes into a bounded writing task unless the user requests them.
 
-Read the whole draft and any explicit editing request. Notice its structure, tone, level of formality, phrasing, contractions and rhythm. If the user explicitly requests a substantial rewrite or a different tone, follow that request; otherwise default to a light edit.
+Read the [voice profile and examples](references/voice-profile.md) before editing or drafting. Explicit current instructions take priority, followed by the user's stated preferences, the supplied original draft, then the reference profile. The profile supplies defaults for new writing; adapt it to another user's own voice. Do not impose this voice on quotations, another person's writing or ordinary assistant explanations.
 
-## Editing rules
+Choose the requested mode:
 
-- Preserve the order of ideas, paragraph structure, headings and list format. Keep greetings, sign-offs and personal turns of phrase.
-- Fix spelling, grammar, punctuation and wording that obstructs understanding. Use en-GB spelling, while preserving exact quotations and identifiers.
-- Keep edits local. Do not add headings, convert prose into bullets, reorder arguments or replace everyday wording with corporate language merely to polish it.
-- Preserve meaning, emphasis, uncertainty, ownership and commitments. Do not invent facts, deadlines, promises or stronger claims.
-- Leave wording alone when it already works. A draft may need no changes. Keep optional structural improvements as brief suggestions after the draft.
-- Apply other writing guidance, including `cognitive-clarity` and `written-communication`, within this light-edit scope. General advice to shorten or restructure is not a reason to override the user's voice.
+- **Feedback only:** provide comments without rewriting.
+- **Light edit:** retain the draft's structure, tone and personal phrasing.
+- **New draft:** compose in the user's voice using the audience, purpose and supplied facts.
+- **Substantial rewrite or different tone:** follow the explicit request while preserving meaning and factual accuracy.
 
-## Factual and questionable claims
+## Editing and drafting
 
-Check claims against the available evidence. Verify material claims using appropriate sources where needed, and distinguish a confirmed error from uncertainty or missing evidence. Never claim to have verified something that has not been checked.
+- Follow the reference profile for spelling, greetings and recommendation wording unless the user or their original draft establishes a different preference. Preserve exact quotations and identifiers.
+- For light edits, preserve idea order, paragraphs, headings, lists, greetings and sign-offs unless an explicit preference requires a local correction. Do not restructure merely to polish.
+- Fix errors and wording that obstructs understanding. Keep concrete examples, personal warmth, useful reasoning and varied sentence lengths. Leave wording that already works alone.
+- Preserve uncertainty, emphasis, ownership, commitments and the force of requests. Do not turn a suggestion into a command, a condition into a promise or an expectation into an optional invitation.
+- For new drafts, use a natural structure suited to the audience. Do not invent facts, personal experiences, praise, deadlines or commitments.
+- Apply `cognitive-clarity` and `written-communication` within the requested mode. Clarity guidance does not authorise a substantial rewrite of an existing draft.
 
-Do not silently change factual claims or resolve ambiguities by guessing. Raise every identified factual error or questionable claim in a separate comment after the revised draft. Quote the relevant phrase, explain the concern briefly, and give a supported correction or the specific check needed. Link supporting sources when available. Make clear when wording retained from the draft is known to be incorrect. Suggestions about potentially misleading or unsupported wording belong here too.
+## Facts and response format
 
-## Response format
+Check material claims using appropriate evidence. Never claim verification that was not performed. For edits, do not silently change factual claims or guess at ambiguities. Put the complete draft first, then **Comments** only for factual concerns, ambiguities or material suggestions. Quote each questionable phrase and explain the supported correction or check needed. Explicitly identify any known error retained in the draft; it needs resolution before sending.
 
-1. Put the complete, lightly edited draft first. Any factual concerns in the comments must be addressed before sending.
-2. Add **Comments** afterwards only when there are factual concerns, ambiguities or material suggestions. Keep comments outside the draft. Do not add a generic all-clear or a routine change log.
-
-If the user asks for feedback only, provide comments without an unsolicited rewrite. If they ask for feedback and a redraft, provide both in the order above.
+For new writing, omit unsupported claims or flag essential missing information outside the draft. Do not add routine change logs or an all-clear. Feedback-only requests receive comments only.
 
 ## Final check
 
-Compare with the original: does it still sound like the same person, with the same structure and intent? Undo unnecessary edits. Ensure all identified factual concerns appear after the draft.
-
-## Verified example
-
-A verification draft included “Hi folks”, “I reckon we're nearly there”,
-“see whats still awkward?” and “12 of the 40 checks passed, so we're at 80%”.
-The light edit kept the greeting, informal phrasing and paragraph order,
-corrected “whats” to “what's”, and flagged the arithmetic in a comment after
-the draft: 12 out of 40 is 30%, not 80%. The comment made clear that the
-incorrect percentage had been retained pending correction.
-
-## Related skills
-
-- `cognitive-clarity` — clarity and accessible communication.
-- `written-communication` — broader drafting and audience guidance.
+Does this sound like the user addressing this audience? Check the reference, preserve the intended certainty and request strength, undo unnecessary edits, and keep assistant commentary outside the authored content.
