@@ -99,6 +99,7 @@ Operating outside the team boundary: PM partnership, business framing, stakehold
 | [working-with-architects](skills/working-with-architects/) | Work effectively with architects, staff engineers, and principal engineers |
 | [working-with-pm](skills/working-with-pm/) | Build a stronger PM-EM partnership and improve product orientation |
 | [written-communication](skills/written-communication/) | Draft clear Slack messages, announcements, and stakeholder updates |
+| [preserve-my-voice](skills/preserve-my-voice/) | Lightly edit drafts while preserving personal voice and structure; flag factual concerns afterwards |
 
 ### Managing Yourself
 

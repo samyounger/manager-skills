@@ -9,3 +9,6 @@ FromEvernote/
 Course lessons/
 *.csv
 *_sample.txt
+
+# Private manager context and installation configuration
+.agents/
