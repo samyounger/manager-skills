@@ -82,6 +82,7 @@ Getting work through the system: prioritization, deadlines, productivity, hidden
 | Skill | Purpose |
 |---|---|
 | [developer-productivity](skills/developer-productivity/) | Measure team productivity without harmful individual scoring |
+| [jellyfish-team-insights](skills/jellyfish-team-insights/) | Query and collate Jellyfish evidence using private team and group configuration |
 | [managing-urgency](skills/managing-urgency/) | Handle deadlines, fake urgency, crisis pressure, and tradeoff conversations |
 | [roadmap-planning](skills/roadmap-planning/) | Plan roadmaps, prioritize tech work, and communicate tradeoffs |
 | [shadow-work](skills/shadow-work/) | Identify hidden capacity drains like support, glue work, and shadow backlogs |
