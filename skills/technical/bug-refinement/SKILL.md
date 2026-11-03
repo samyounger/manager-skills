@@ -2,11 +2,7 @@
 name: bug-refinement
 description: Investigate and refine engineering bugs into concise, evidence-backed Jira tickets with root cause, severity, reproduction steps, BDD acceptance criteria, API response contracts and observability requirements. Use for “refine this bug”, “investigate this error”, or “make this bug ticket implementation-ready”. Does not authorise implementing or deploying the fix.
 metadata:
-<<<<<<< Updated upstream
-  version: 1.2.9
-=======
   version: 1.2.11
->>>>>>> Stashed changes
 ---
 
 # Bug Refinement
