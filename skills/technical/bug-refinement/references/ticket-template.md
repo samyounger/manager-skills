@@ -2,6 +2,8 @@
 
 Use this content model for an engineering bug. Replace illustrative placeholders with verified facts and remove irrelevant prompts. It is a menu of useful sections, not a requirement to invent work for every section. The Markdown below is an authoring template; compile it into native Jira ADF rather than pasting it as a plain-text description.
 
+Apply this field template only to new tickets and full refinement of bugs not yet picked up. For existing work already in progress, follow the comment-only route in `SKILL.md`: add the investigation findings as a native ADF comment and preserve existing ticket fields.
+
 ## Description
 
 This field explains the problem, evidence and proposed approach. It contains no acceptance criteria, future verification checklist or “Verification:” paragraph, including inside expands. Put future pass/fail outcomes only in the Acceptance Criteria custom field.

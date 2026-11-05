@@ -2,7 +2,7 @@
 name: preserve-my-voice
 description: Applies when the user asks for feedback on or edits to their writing, or for new messages, emails, proposals, updates and other content written on their behalf in their voice. Trigger phrases include "review my draft", "tidy this up", "keep my voice", "light edit", "draft a message" and "write this as me". Does not apply merely because a task concerns another person's performance or asks for general advice.
 metadata:
-  version: 1.2.0
+  version: 1.2.1
 ---
 
 # Preserve My Voice
@@ -36,6 +36,12 @@ Choose the requested mode:
 Check material claims using appropriate evidence. Never claim verification that was not performed. For edits, do not silently change factual claims or guess at ambiguities. Put the complete draft first, then **Comments** only for factual concerns, ambiguities or material suggestions. Quote each questionable phrase and explain the supported correction or check needed. Explicitly identify any known error retained in the draft; it needs resolution before sending.
 
 For new writing, omit unsupported claims or flag essential missing information outside the draft. Do not add routine change logs or an all-clear. Feedback-only requests receive comments only.
+
+## Supporting reference
+
+[Martin Fowler, “LLM Voice” (29 October 2026)](https://martinfowler.com/bliki/LLM-Voice.html) explains his concern that AI-generated prose can alienate readers and that delegating writing can also delegate the thinking involved. He cautions against AI-written first drafts and rephrasing, while recognising accessibility, translation and routine administrative uses. This is a writer's perspective, not a research finding.
+
+Apply this reference by preserving the user's own wording and reasoning, leaving effective passages alone, and using feedback when that is the requested mode. Fowler's stricter position does not override an explicit request for a new draft or rewrite, or the modes above.
 
 ## Final check
 
