@@ -55,3 +55,9 @@ skills/your-skill-name/
 ### 6. Open a PR
 
 Submit your PR with a short description of what the skill does and why it's useful.
+
+## Reusable scheduled skills and private inputs
+
+Place recurring procedures in `scheduled-skills/<name>/SKILL.md` and neutral placeholder examples beside them. Follow the same frontmatter and naming rules as `skills/`. Read [scheduled workflow setup](schedules/README.md) for the configuration contract and installation steps.
+
+Keep all personal data, organisation-specific values, filled-in examples, explicit authorisations and live schedule exports under ignored `.agents/`. Do not use real identities, service IDs, machine paths or personal settings as public examples. Before delivery, check staged content as well as saved files and ensure `.agents/` has no tracked entries.

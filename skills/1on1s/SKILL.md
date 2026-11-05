@@ -9,6 +9,8 @@ metadata:
 
 ## Before Starting
 
+When the caller supplies a configuration repository, resolve all `.agents/` context, preferences and profile paths against that repository. Otherwise use the current project's `.agents/` directory.
+
 Check for EM context first:
 1. Read `.agents/em-context.md` if it exists
 2. If a person is mentioned, look for `.agents/reports/[name].md` and read it
@@ -28,7 +30,7 @@ For 1:1 meeting preparation, read the `Obsidian vault` path from `.agents/em-con
 
 Use the skills `* (obsidian)` when interacting with the vault through the Obsidian CLI. Use the `obsidian-markdown` skill when creating or editing Obsidian-flavored Markdown. Require that the user has Obsidian open and that the CLI responds before reading or changing the vault. In Codex's shell sandbox, use escalated terminal access for the CLI so it connects to the open app. If either is unavailable, stop and report the blocker rather than using direct filesystem workarounds.
 
-Derive the person ID from the person’s name as lowercase first initial + surname. For example, `Sam Younger` becomes `syounger`.
+Use a configured person ID mapping when supplied. Otherwise derive the person ID from the person’s name as lowercase first initial + surname. For example, `Alex Morgan` becomes `amorgan`.
 
 Read the person’s direct-report profile before gathering delivery data. Its `Delivery System IDs` section is the source of truth for the exact Jira account ID and GitHub username. Use those IDs in Jira and GitHub queries rather than matching display names. If a value is absent or explicitly unconfirmed, do not guess: use a name-based search to identify it, confirm it against an authoritative record, and then update the profile.
 
@@ -45,7 +47,7 @@ Create a new meeting note in the person directory with this filename:
 
 `YYYY-MM-DD--[person-id]-1-1.md`
 
-Apply the Obsidian template named `1-1--template`.
+Use the caller-configured agenda root, filename convention and template when supplied. Otherwise apply the conventions above and the Obsidian template named `1-1--template`.
 
 Ensure the note has frontmatter like:
 
@@ -90,8 +92,8 @@ Add a short **Slack context** subsection to the preparation evidence: relevant t
 
 In the generated meeting note, every Jira issue key and GitHub pull-request reference must be a clickable Markdown link. Never leave a ticket key or PR number as plain text.
 
-- Jira: link the issue key to its canonical Jira URL: `[RAD-85120](https://user-testing.atlassian.net/browse/RAD-85120)`.
-- GitHub: link the PR number to the canonical URL returned by the data source (for example, its `html_url`): `[#1321](https://github.com/UserTestingEnterprise/test-automation/pull/1321)`.
+- Jira: link the issue key to its canonical Jira URL: `[<KEY>](<jira-base-url>/browse/<KEY>)`, resolving the base URL from private configuration or the connected issue tracker.
+- GitHub: link the PR number to the canonical URL returned by the data source (for example, its `html_url`): `[#<number>](<verified-pull-request-url>)`.
 - Apply this rule everywhere in the note, including the activity summary, evidence, output evaluation, agenda prompts, and action items. Do not construct a GitHub repository URL unless it has been verified by the source.
 
 ### Output Evaluation

@@ -110,6 +110,10 @@ Your own operating system as a manager: role transitions, personal traps, bad-da
 | [management-transitions](skills/management-transitions/) | Navigate new-manager, inherited-team, peer-to-manager, and acquisition transitions |
 | [managing-yourself](skills/managing-yourself/) | Diagnose personal EM traps, bad-day patterns, and recurring leadership tensions |
 
+## Reusable scheduled workflows
+
+`scheduled-skills/` contains [reusable recurring procedures](scheduled-skills/README.md). Personal inputs and schedule recovery snapshots belong in the ignored `.agents/` directory. Use the [setup guide](schedules/README.md) to configure a checkout and install shared skills for Codex or Claude Code. Back up private configuration separately; it is not included in a repository clone.
+
 ## Installation
 
 Use the Skills CLI in the project where you want to install the skills:

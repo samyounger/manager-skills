@@ -1,6 +1,6 @@
 # Engineering Portfolio Report Format
 
-Use this format for the file. Keep fields on separate lines and leave a blank line between portfolio items.
+Destination frontmatter rules take precedence over this example; omit unsupported status values. Use this format for the file. Keep fields on separate lines and leave a blank line between portfolio items.
 
 ```markdown
 ---
@@ -22,11 +22,11 @@ status: current
 
 | Priority | Epic | EM action | By |
 | --- | --- | --- | --- |
-| 🔴 Now | <Epic summary> ([<KEY>](https://user-testing.atlassian.net/browse/<KEY>)) | <specific action the Engineering Manager can take> | <documented date or not recorded> |
+| 🔴 Now | <Epic summary> ([<KEY>](<jira-base-url>/browse/<KEY>)) | <specific action the Engineering Manager can take> | <documented date or not recorded> |
 
 ## Needs EM Attention
 
-### <Epic summary> ([<KEY>](https://user-testing.atlassian.net/browse/<KEY>))
+### <Epic summary> ([<KEY>](<jira-base-url>/browse/<KEY>))
 
 Status: <emoji> <Jira workflow status>
 Focus: <🔴 Now / 🟠 This week / 🟡 Watch>
@@ -43,7 +43,7 @@ By: <documented date or not recorded>
 
 ## On Track
 
-### <Epic summary> ([<KEY>](https://user-testing.atlassian.net/browse/<KEY>))
+### <Epic summary> ([<KEY>](<jira-base-url>/browse/<KEY>))
 
 Status: <emoji> <Jira workflow status>
 Target: <date or not recorded>
@@ -54,7 +54,7 @@ Signal freshness: <Today / This week / Stale / not recorded>
 
 ## Planning Watchlist
 
-### <Epic summary> ([<KEY>](https://user-testing.atlassian.net/browse/<KEY>))
+### <Epic summary> ([<KEY>](<jira-base-url>/browse/<KEY>))
 
 Status: <emoji> <Jira workflow status>
 Phase: <recorded phase or planning state>
@@ -105,4 +105,4 @@ Sort Needs EM Attention by this order, then by the earliest documented `By` date
 - **EM action:** State the next action the Engineering Manager can take. `Owner` is the Engineering Manager for Needs EM Attention. `Input needed from` names an accountable role only when that role must provide a decision, artefact, evidence, or hand-off that enables the intervention; otherwise use `not recorded`. Do not make the Engineering Manager the owner of the other role's routine work. `By` must be a documented deadline or `not recorded`; do not invent one. If no action is needed, the item belongs outside Needs EM Attention.
 - **Start readiness:** Be specific about the condition that makes the work not ready; avoid an unqualified `not ready`.
 - **Missing:** List the few planning inputs that would change start readiness, such as confirmed capacity, an owner, a decision, a dependency agreement, a target, or a technical/design artefact.
-- **Epic links:** Every epic occurrence, including Focus today rows and section headings, must use `<Epic summary> ([<KEY>](https://user-testing.atlassian.net/browse/<KEY>))`. Do not write a bare epic key.
+- **Epic links:** Every epic occurrence, including Focus today rows and section headings, must use `<Epic summary> ([<KEY>](<jira-base-url>/browse/<KEY>))`. Do not write a bare epic key.

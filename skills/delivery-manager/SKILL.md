@@ -11,7 +11,9 @@ Create a skimmable engineering portfolio report that helps an Engineering Manage
 
 ## Grounding and evidence
 
-Establish the portfolio or Delivery Team scope, the Engineering Manager, the Jira scope, and the output file from the caller's context. Read `.agents/em-context.md` when it exists, so the report reflects The Delivery Team's remit and current priorities. Use live Jira data as the source of truth. Read the epic before judging its health, including its Portfolio Status when present. Inspect child tickets only to establish a material delivery risk or the latest meaningful signal; do not surface them in the report unless they are essential to explaining that risk.
+When the caller supplies a configuration repository, resolve all `.agents/` context, preferences and profile paths against that repository. Otherwise use the current project's `.agents/` directory.
+
+Establish the portfolio or Delivery Team scope, the Engineering Manager, the Jira scope, and the output file from the caller's context. Resolve `<jira-base-url>` from private configuration or verified connected Jira evidence; never guess a tenant URL. Read `.agents/em-context.md` when it exists, so the report reflects The Delivery Team's remit and current priorities. Use live Jira data as the source of truth. Read the epic before judging its health, including its Portfolio Status when present. Inspect child tickets only to establish a material delivery risk or the latest meaningful signal; do not surface them in the report unless they are essential to explaining that risk.
 
 Before classifying Needs EM Attention, read [the Engineering Manager role-scope source](references/sources.md#engineering-manager-role-scope) and [the team-operation source](references/sources.md#team-operation-and-role-inputs) when they are available. Use them to distinguish a system-level exception the Engineering Manager should address from routine project, technical, product, quality, or release work owned by another role. Where an attention item requires another role's evidence, decision, or hand-off, name that role in `Input needed from`.
 
@@ -29,7 +31,7 @@ Begin the report with a **Focus today** queue containing the one to three most i
 
 Keep the report readable in under five minutes: prefer no more than four attention items, six on-track items, and three watchlist items. Omit an empty detail section. Prioritise the most consequential evidence when the portfolio is larger.
 
-Use the actual Jira summary in every epic heading, and never mention a Jira key without its summary alongside it. Every epic reference must hyperlink the Jira key to `https://user-testing.atlassian.net/browse/<KEY>`, using the form `<Epic summary> ([<KEY>](https://user-testing.atlassian.net/browse/<KEY>))`. Prefer product- and team-readable descriptions over Jira terminology. Use en-GB spelling.
+Use the actual Jira summary in every epic heading, and never mention a Jira key without its summary alongside it. Every epic reference must hyperlink the Jira key to `<jira-base-url>/browse/<KEY>`, using the form `<Epic summary> ([<KEY>](<jira-base-url>/browse/<KEY>))`. Prefer product- and team-readable descriptions over Jira terminology. Use the language and spelling configured in the caller context or private personal preferences.
 
 ## Status and output
 
