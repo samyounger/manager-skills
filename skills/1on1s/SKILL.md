@@ -2,7 +2,7 @@
 name: 1on1s
 description: Prepares agendas, diagnoses struggling 1:1 relationships, and gives frameworks for running effective 1:1 meetings with direct reports. Use when the user wants to prepare for, run, improve, or follow up on a 1:1, or says "1:1 agenda," "prepare for my 1:1," "1:1 notes," "what should I talk about with," "my direct report," "check in with my report," "make my 1:1s better," "1:1 template," or "my 1:1s feel like status updates." Do NOT use when the user needs to deliver specific feedback (use feedback) or discuss performance reviews (use performance-reviews).
 metadata:
-  version: 2.6.0
+  version: 2.9.0
 ---
 
 # 1:1s
@@ -48,6 +48,46 @@ Create a new meeting note in the person directory with this filename:
 `YYYY-MM-DD--[person-id]-1-1.md`
 
 Use the caller-configured agenda root, filename convention and template when supplied. Otherwise apply the conventions above and the Obsidian template named `1-1--template`.
+
+### Note layout and gathered sources
+
+Keep the meeting notes, concise agenda and questions visible. Keep prepared agenda content separate from the manager’s own notes. Replace the template’s standalone `## Questions` section with the following block, using a horizontal rule before `## My notes` and placing Questions inside it:
+
+```markdown
+---
+
+## My notes
+
+### Notes
+-
+
+### Questions
+1.
+
+> [!success]- Notes (Zoom AI summary)
+>
+```
+
+Keep the manager’s Notes and Questions visible. Use the `success` callout type for the Zoom AI summary (green in the default Obsidian theme), distinct from the `info` evidence callouts. Put Zoom AI summary content inside that collapsed callout, prefixing each content line with `> ` and blank lines with `>`. Leave it empty until a summary is supplied; do not invent one. Preserve existing personal notes, questions and summary text when applying this layout to an existing note.
+
+Omit a dedicated `Actions` section from generated agendas and the reusable 1:1 note template; record any agreed follow-up naturally in the meeting notes instead. Preserve existing human-written actions when refining an older note unless their removal is requested.
+
+After the personal notes and Zoom AI summary, insert an unquoted horizontal rule (`---`) followed by `## Collated evidence`. Place all gathered source material beneath that heading in foldable Obsidian callouts, collapsed by default. Keep the Zoom AI summary within My notes, above the divider. This includes preparation evidence, Jira activity, merged/open PRs and blockers, Slack context, prior-note follow-ups, source extracts, output evaluation and delivery-history tables/charts. Use one callout per main preparation section, retaining its subheadings, links, dates, caveats and attribution. Keep canonical frontmatter properties outside callouts. Brief source links may remain beside agenda prompts.
+
+```markdown
+---
+
+## Collated evidence
+
+> [!info]- Preparation evidence
+> ### Jira, GitHub and Slack context
+> [Evidence and verified source links]
+>
+> ### Previous 1:1 follow-ups
+> [Relevant prior-note context]
+```
+
+Prefix every content line with `> ` and every blank line with `>` so the whole section stays inside the callout. Include these prefixes on table rows and fenced code blocks too. Use separate `[!info]- Output evaluation` and `[!info]- Delivery trend (last six months)` callouts for those sections when present. Separate consecutive callouts with an unquoted HTML comment (`<!-- Separate callouts -->`), with a blank line before and after it. A blank line alone can leave consecutive blockquotes joined, causing one callout to collapse the others. Verify that each source callout and the Zoom AI summary expand and collapse independently. Wrap existing content without rewriting its factual claims or changing counts. Apply this layout to any caller-configured template as well; a template must not reintroduce an `Actions` heading or leave gathered sources expanded.
 
 Ensure the note has frontmatter like:
 
@@ -100,7 +140,7 @@ In the generated meeting note, every Jira issue key and GitHub pull-request refe
 
 Use the two-week activity as evidence for a coaching conversation, not a performance rating. Evaluate patterns rather than raw ticket or pull-request counts, and account for scope, complexity, dependencies, leave, and work that is not visible in Jira or GitHub.
 
-Add a short, evidence-based evaluation to the preparation report using this template:
+Add a short, evidence-based evaluation to the preparation report using this content template. In the saved Obsidian note, replace its `## Output evaluation` heading with `> [!info]- Output evaluation` and prefix every remaining line as described under Note layout and gathered sources:
 
 ```markdown
 ## Output evaluation
@@ -134,7 +174,7 @@ Useful prompts include:
 
 Read the person’s prior 1:1 notes from the preceding six months. Extract each measurement from the `reporting_period_start`, `reporting_period_end`, and the five flat `delivery_*` frontmatter properties. For legacy notes with nested `delivery_counts`, read the corresponding issue-type values from that mapping instead; never add both formats together. For older notes that predate these properties, use a body measurement only when it explicitly records both the reporting period and ticket-delivery counts. Do not treat absent data as zero, recreate historical counts from memory, or sum overlapping reporting periods.
 
-Add a `## Delivery trend (last six months)` section to the new note when at least three comparable reporting periods exist. Start with an auditable table, then add an inline Mermaid bar chart of the total completed tickets for each reporting period. A total is the sum of the listed issue-type counts, including sub-tasks. Label each bar with the end date of its reporting period, and call it **reported ticket delivery** rather than output or performance.
+Add a collapsed `[!info]- Delivery trend (last six months)` callout to the new note when at least three comparable reporting periods exist. Start with an auditable table, then add an inline Mermaid bar chart of the total completed tickets for each reporting period. The content example below shows the inner Markdown: replace its top-level heading with the callout title and prefix every remaining line, including the table and Mermaid fence, as described under Note layout and gathered sources. A total is the sum of the listed issue-type counts, including sub-tasks. Label each bar with the end date of its reporting period, and call it **reported ticket delivery** rather than output or performance.
 
 ````markdown
 ## Delivery trend (last six months)

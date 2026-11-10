@@ -2,7 +2,7 @@
 name: bug-refinement
 description: Investigate and refine engineering bugs into concise, evidence-backed Jira tickets with root cause, severity, reproduction steps, BDD acceptance criteria, API response contracts and observability requirements. Use for “refine this bug”, “investigate this error”, or “make this bug ticket implementation-ready”. Does not authorise implementing or deploying the fix.
 metadata:
-  version: 1.2.13
+  version: 1.2.14
 ---
 
 # Bug Refinement
@@ -80,7 +80,7 @@ Record the search scope, the status/resolution of relevant matches, and whether 
 
 For every authorised ticket creation or full field refinement (excluding comment-only refinement), populate the Jira field or fields required for inclusion in **PANDE backlog**. Discover the actual field IDs, supported values and create/edit permissions from Jira metadata and, where needed, the backlog/board filter or verified team configuration. Preserve unrelated multi-value entries when adding the required values. Do not assume that PANDE backlog is a label, invent a field/value, or treat mentioning it in the description as setting the fields. If the mapping or write access is unavailable, prepare the refinement and report the specific missing information or access.
 
-Search the owning team's project for an existing parent epic whose complete summary matches `Test Flow bugs Q[1-4] YYYY` (for example, the pattern `^Test Flow bugs Q[1-4] [0-9]{4}$`). Verify that its issue type is Epic, its current status is **Developing**, and it is active/unresolved. Set the ticket's actual Parent/epic relationship field, as supported by Jira metadata, to the verified epic key; a link in prose is insufficient.
+Search the owning team's project for an existing parent epic whose complete summary matches `TestFlow bugs Q[1-4] YYYY` (for example, the pattern `^TestFlow bugs Q[1-4] [0-9]{4}$`). Verify that its issue type is Epic, its current status is **Developing**, and it is active/unresolved. Set the ticket's actual Parent/epic relationship field, as supported by Jira metadata, to the verified epic key; a link in prose is insufficient.
 
 If several eligible epics exist, use verified team context to identify the intended quarter/year; if still ambiguous, ask for the intended epic rather than choosing arbitrarily. If a successful search finds no eligible epic, leave Parent blank, including clearing an existing non-qualifying parent where editable, and report that no eligible epic was found. Never create, invent, rename or transition an epic to satisfy this rule. A failed or inaccessible search does not establish that no epic exists; report that limitation before changing an existing parent.
 
@@ -128,7 +128,7 @@ Write Proposed solution as a clear, affirmative description of the chosen implem
 - **Description:** issue, severity, timeline, source-backed root cause, proposed implementation approach, concise observability summary, collapsed evidence/log examples and critical references.
 - **P-Severity and Priority:** dedicated Jira fields holding the selected impact and urgency values; use option objects, with their separate rationales in the description.
 - **PANDE backlog:** the verified Jira field/value combination required by the backlog configuration.
-- **Parent:** the verified active Developing epic matching `Test Flow bugs Q[1-4] YYYY`, or blank when no eligible epic exists.
+- **Parent:** the verified active Developing epic matching `TestFlow bugs Q[1-4] YYYY`, or blank when no eligible epic exists.
 - **Steps to Reproduce:** the dedicated editable custom field; use an ordered list.
 - **Acceptance Criteria:** the dedicated editable custom field; use concise nested BDD bullets. This is the sole home for future pass/fail outcomes and verification requirements, including observability outcomes.
 
@@ -162,7 +162,7 @@ For new tickets and full field refinement, the reviewer checks the applicable re
 - Proposed solution states the chosen approach clearly; dismissed alternatives, when relevant, form a concise numbered list with reasons.
 - Reproduction steps and concise, non-duplicated BDD Acceptance Criteria occupy their dedicated fields; requirements appear once, and necessary outcomes have not been lost during shortening.
 - P-Severity and Priority match the evidence, separate rationales and permitted option values, subject to explicit user exceptions.
-- The verified PANDE backlog fields are populated. Parent references an existing active/unresolved Epic in Developing whose summary matches `Test Flow bugs Q[1-4] YYYY`, or is blank after a successful search found no eligible epic; respect explicit field-preservation exceptions.
+- The verified PANDE backlog fields are populated. Parent references an existing active/unresolved Epic in Developing whose summary matches `TestFlow bugs Q[1-4] YYYY`, or is blank after a successful search found no eligible epic; respect explicit field-preservation exceptions.
 - Native headings, lists, code marks, links and collapsed Evidence/logging expands follow the skill, with no unsupported contract changes or unnecessary scope.
 
 Keep the review read-only. Ask for a pass/fail verdict, concise actionable findings with exact field/section and supporting evidence, and any checks that could not be completed. An unavailable source is an explicit review limitation, not proof that a claim is false or verified.
